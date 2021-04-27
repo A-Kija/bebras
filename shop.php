@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // POST SCENARIJUS
 if(!empty($_POST)) {
     $_SESSION['ar'] = $_POST['arbata'];
@@ -8,7 +9,6 @@ if(!empty($_POST)) {
 }
 
 // GET SCENARIJUS
-
 ?>
 
 <form action="" method="get">
