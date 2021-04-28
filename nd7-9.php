@@ -8,7 +8,7 @@ $count = rand(3, 10);
 
 ob_start(); //<--- niekas nieko neechoina
     ?>
-    <form action="" method="post">
+    <form action="?how_much=<?= $count ?>" method="post">
     <?php
 for ($i=0; $i<$count; $i++) {
     ?>
@@ -27,7 +27,7 @@ ob_end_clean();
 else {
     ob_start(); //<--- niekas nieko neechoina
     ?>
-    <h1>Buvo pačekinta <?= count($_POST) - 1 ?>, o viso buvo <?= $_POST['counter'] ?>
+    <h1>Buvo pačekinta <?= count($_POST) - 1 ?>, o viso buvo <?= $_POST['counter'] ?>, <?= $_GET['how_much'] ?>
     <?php
 
     $form = ob_get_contents();
