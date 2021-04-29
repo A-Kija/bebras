@@ -1,0 +1,29 @@
+.menu {
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    background-color: bisque;
+    align-items: center;
+    height: 100px;
+}
+
+.menu a {
+    padding: 5px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+    letter-spacing: 5px;
+    width: 100vw;
+    height: calc(100vh - 100px);
+}
+
+main.login {
+    font-size: 100%;
+    letter-spacing: 3px;
+}
