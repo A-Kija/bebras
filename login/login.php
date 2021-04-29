@@ -1,5 +1,17 @@
 <?php
 require __DIR__.'/bootstrap.php';
+
+// scenarijus ISloginti
+if (isset($_GET['logout'])) {
+    $_SESSION['message'] = 'You are Logged Out, Dear';
+    $_SESSION['msg_type'] = 'ok';
+    unset($_SESSION['name'], $_SESSION['logged']);
+    header('Location: http://localhost/bebras/login/login.php');
+    die;
+}
+
+
+
 // scenarijus loginti
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     foreach ($users as $user) {
@@ -39,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
     <div class="menu">
+        <a href="./index.php">Home</a>
         <a href="./authorized.php">Data about Forests</a>
         <a href="./login.php">Login</a>
         <a href="./login.php?logout">LogOut</a>
