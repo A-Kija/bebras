@@ -1,10 +1,11 @@
 <?php
 
 define('DURYS', 'Dzin-Dzin');
+define('INSTALL_URL', '/bebras/front/');
 
 echo 'Dzin Dzin';
 
-define('INSTALL_URL', '/bebras/front/');
+
 
 
 
@@ -12,12 +13,18 @@ define('INSTALL_URL', '/bebras/front/');
 
 $path = str_replace(INSTALL_URL, '', $_SERVER['REQUEST_URI']);
 
-if ($path == 'delete') {
+$path = explode('/', $path);
+
+
+if ($path[0] == 'delete') {
+    $id = $path[1];
     require __DIR__ . '/delete.php';
 }
 
-elseif ($path == 'list') {
+elseif ($path[0] == 'sarasas') {
+    $listas = $path[1];
     require __DIR__ . '/list.php';
+    
 }
 
 else {

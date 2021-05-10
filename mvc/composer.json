@@ -1,0 +1,18 @@
+{
+    "name": "arvyd/bebras",
+
+    "authors": [{
+        "name": "A-Kija",
+        "email": "arvydas.kijakauskas@gmail.com"
+    }],
+
+    "autoload": {
+        "psr-4": {
+            "": ""
+        }
+    },
+
+    "require": {
+        "ramsey/uuid": "^4.1"
+    }
+}
