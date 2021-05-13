@@ -2,6 +2,8 @@
 use App\Controllers\DeleteController;
 use App\Controllers\ListController;
 
+use App\Controllers\BankController;
+
 
 define('INSTALL_URL', '/bebras/mvc/');
 define('DIR', __DIR__.'/');
@@ -42,6 +44,26 @@ if ($path[0] == 'delete') {
 elseif ($path[0] == 'sarasas') {
     return new ListController;
 }
+
+
+elseif ($path[0] == 'bank') {
+
+    if ($path[1] == 'add') {
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            return (new BankController)->add($path[2] ?? 0);
+        }
+        else {
+            return (new BankController)->showAdd($path[2] ?? 0);
+        }
+
+
+    }
+
+
+}
+
+
 
 else {
     echo '404';
