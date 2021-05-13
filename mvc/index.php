@@ -56,8 +56,6 @@ elseif ($path[0] == 'bank') {
         else {
             return (new BankController)->showAdd($path[2] ?? 0);
         }
-
-
     }
 
 
