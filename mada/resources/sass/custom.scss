@@ -21,3 +21,30 @@
         }
     }
 }
+
+fieldset.sort {
+    border: 1px solid gray;
+    padding: 5px 20px;
+    margin: 15px 0;
+    legend {
+        width: auto;
+        display: inline-block;
+        padding: 0 5px;
+        font-size: 14px;
+    }
+    .inputs {
+        padding: 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        * {
+            margin: 0 2px;
+        }
+    }
+    span.border {
+        display: inline-block;
+        width: 1px;
+        background-color: gray;
+        height: 30px;
+    }
+}

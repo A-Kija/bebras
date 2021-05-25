@@ -5,18 +5,69 @@ namespace App\Http\Controllers;
 use App\Models\Outfit;
 use App\Models\Master;
 use Illuminate\Http\Request;
+use Validator;
 
 class OutfitController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $outfits = Outfit::all();
-        return view('outfit.index', ['outfits' => $outfits]);
+        
+        $masters = Master::all();
+
+        if ($request->master_id) {
+            $outfits = Outfit::where('master_id', $request->master_id)->get();
+            $master_id = $request->master_id;
+        }
+        else {
+            $outfits = Outfit::all();
+            $master_id = 0;
+        }
+
+        if ($request->sort) {
+            if ('asc' == $request->order) {
+                if ('size' == $request->sort) {
+                    $outfits = $outfits->sortBy('size');
+                    $order = 'asc';
+                    $sort = 'size';
+                }
+                elseif ('outfit' == $request->sort) {
+                    $outfits = $outfits->sortBy('type');
+                    $order = 'asc';
+                    $sort = 'outfit';
+                }
+            }
+            if ('desc' == $request->order) {
+                if ('size' == $request->sort) {
+                    $outfits = $outfits->sortByDesc('size');
+                    $order = 'desc';
+                    $sort = 'size';
+                }
+                elseif ('outfit' == $request->sort) {
+                    $outfits = $outfits->sortByDesc('type');
+                    $order = 'desc';
+                    $sort = 'outfit';
+                }
+            }
+        }
+
+        return view('outfit.index', [
+            'outfits' => $outfits,
+            'masters' => $masters,
+            'order' => $order ?? '',
+            'sort' => $sort ?? '',
+            'master_id' => $master_id,
+            
+            ]);
     }
 
     /**
@@ -38,6 +89,25 @@ class OutfitController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $validator = Validator::make($request->all(),
+        [
+            'outfit_type' => ['required', 'min:3', 'max:50'],
+            'outfit_color' => ['required', 'min:2', 'max:20'],
+            'outfit_size' => ['required', 'integer', 'min:1', 'max:100'],
+            'outfit_about' => ['required'],
+            'master_id' => ['required', 'integer', 'min:1'],
+        ],
+        [
+            'master_id.min' => 'Please, select the Master'
+        ]
+        );
+
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
         $outfit = new Outfit;
         $outfit->type = $request->outfit_type;
         $outfit->color = $request->outfit_color;
@@ -80,6 +150,24 @@ class OutfitController extends Controller
      */
     public function update(Request $request, Outfit $outfit)
     {
+        $validator = Validator::make($request->all(),
+        [
+            'outfit_type' => ['required', 'min:3', 'max:50'],
+            'outfit_color' => ['required', 'min:2', 'max:20'],
+            'outfit_size' => ['required', 'integer', 'min:1', 'max:100'],
+            'outfit_about' => ['required'],
+            'master_id' => ['required', 'integer', 'min:1'],
+        ],
+        [
+            'master_id.min' => 'Please, select the Master'
+        ]
+        );
+
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+        
         $outfit->type = $request->outfit_type;
         $outfit->color = $request->outfit_color;
         $outfit->size = $request->outfit_size;

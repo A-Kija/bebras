@@ -868,6 +868,33 @@
   margin: 0 5px;
 }
 
+fieldset.sort {
+  border: 1px solid gray;
+  padding: 5px 20px;
+  margin: 15px 0;
+}
+fieldset.sort legend {
+  width: auto;
+  display: inline-block;
+  padding: 0 5px;
+  font-size: 14px;
+}
+fieldset.sort .inputs {
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+fieldset.sort .inputs * {
+  margin: 0 2px;
+}
+fieldset.sort span.border {
+  display: inline-block;
+  width: 1px;
+  background-color: gray;
+  height: 30px;
+}
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
