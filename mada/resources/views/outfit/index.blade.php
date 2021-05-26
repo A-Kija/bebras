@@ -46,6 +46,9 @@
                       </div>
 
                       <div class="list-buttons">
+                        <a class="btn btn-info" href="{{route('outfit.show',[$outfit])}}">
+                          Show
+                        </a>
                         <a class="btn btn-info" href="{{route('outfit.edit',[$outfit])}}">
                           Edit
                         </a>
