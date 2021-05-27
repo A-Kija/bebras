@@ -41,7 +41,7 @@
 
                       <div class="list-title">
                         {{$outfit->outfitMaster->name}} {{$outfit->outfitMaster->surname}}
-                        <span>{{$outfit->type}}</span>
+                        <span style="color:{{$outfit->color}};">{{$outfit->type}}</span>
                         <span>{{$outfit->size}}</span>
                       </div>
 
