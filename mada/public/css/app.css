@@ -10897,6 +10897,14 @@ fieldset.sort span.border {
   height: 30px;
 }
 
+.list-img {
+  max-height: 150px;
+}
+.list-img img {
+  height: 150px;
+  width: auto;
+}
+
 button.btn {
   display: inline;
 }

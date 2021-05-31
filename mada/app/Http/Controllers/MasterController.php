@@ -42,6 +42,7 @@ class MasterController extends Controller
             [
                 'master_name' => ['required', 'min:3', 'max:64'],
                 'master_surname' => ['required', 'min:3', 'max:64'],
+                'master_portret' => ['sometimes','mimes:jpg,gif,png'],
             ]
         );
 
@@ -51,8 +52,21 @@ class MasterController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
-
         $master = new Master;
+
+        if ($request->has('master_portret')) {
+            $portret = $request->file('master_portret');
+            $imageName = 
+            $request->master_name. '-' .
+            $request->master_surname. '-' .
+            time(). '.' .
+            $portret->getClientOriginalExtension();
+            $path = public_path() . '/portrets/'; // serverio vidinis kelias
+            $url = asset('portrets/'.$imageName); // url narsyklei (isorinis)
+            $portret->move($path, $imageName); // is serverio tmp ===> i public folderi
+            $master->portret = $url;
+        }
+        
         $master->name = $request->master_name;
         $master->surname = $request->master_surname;
         $master->save();
@@ -96,6 +110,7 @@ class MasterController extends Controller
             [
                 'master_name' => ['required', 'min:3', 'max:64'],
                 'master_surname' => ['required', 'min:3', 'max:64'],
+                'master_portret' => ['sometimes','mimes:jpg,gif,png'],
             ],
             [
                 'master_name.min' => 'Tavo labai mažas yra vardas',
@@ -109,7 +124,28 @@ class MasterController extends Controller
             return redirect()->back()->withErrors($validator);
         }
             
-        
+        if ($request->has('master_portret')) {
+
+            if ($master->portret) {
+                $imageName = explode('/', $master->portret);
+                $imageName = array_pop($imageName);
+                $path = public_path() . '/portrets/'.$imageName;
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+            }
+
+            $portret = $request->file('master_portret');
+            $imageName = 
+            $request->master_name. '-' .
+            $request->master_surname. '-' .
+            time(). '.' .
+            $portret->getClientOriginalExtension();
+            $path = public_path() . '/portrets/'; // serverio vidinis kelias
+            $url = asset('portrets/'.$imageName); // url narsyklei (isorinis)
+            $portret->move($path, $imageName); // is serverio tmp ===> i public folderi
+            $master->portret = $url;
+        }
         $master->name = $request->master_name;
         $master->surname = $request->master_surname;
         $master->save();
@@ -127,7 +163,14 @@ class MasterController extends Controller
         if ($master->masterOutfits->count()) {
             return redirect()->back()->with('info_message', 'This Master can not be deleted.');
         }
-        
+        if ($master->portret) {
+            $imageName = explode('/', $master->portret);
+            $imageName = array_pop($imageName);
+            $path = public_path() . '/portrets/'.$imageName;
+            if (file_exists($path)) {
+                unlink($path);
+            }
+        }
         $master->delete();
         return redirect()->route('master.index')->with('success_message', 'The Masters has gone.');
     }

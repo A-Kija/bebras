@@ -28,7 +28,13 @@
                       </div>
 
                     </div>
-
+                    <div class="list-img">
+                    @if($master->portret)
+                      <img src="{{$master->portret}}" alt="{{$master->name}} {{$master->surname}}">
+                    @else
+                      <img src="{{asset('portrets/nophotoavailable.jpg')}}" alt="{{$master->name}} {{$master->surname}}">
+                    @endif
+                    </div>
                   </li>
                 @endforeach
                 </ul>

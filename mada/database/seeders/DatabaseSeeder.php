@@ -29,6 +29,9 @@ class DatabaseSeeder extends Seeder
             DB::table('masters')->insert([
                 'name' => $faker->firstName,
                 'surname' => $faker->lastName,
+                'portret' => rand(0, 3) ? $faker->imageUrl(150, 200) : null,
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
             ]);
         }
 
@@ -40,7 +43,9 @@ class DatabaseSeeder extends Seeder
                 'color' => $faker->safeColorName,
                 'size' => rand(2, 22),
                 'about' => $faker->paragraph(rand(3, 10)),
-                'master_id' => rand(1, 20)
+                'master_id' => rand(1, 20),
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
             ]);
         }
     }
