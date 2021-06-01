@@ -1840,37 +1840,52 @@ module.exports = {
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // window.Vue = require('vue').default;
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-// const app = new Vue({
-//     el: '#app',
-// });
-
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.addEventListener('DOMContentLoaded', function () {
   if (document.querySelector('#summernote')) {
     $('#summernote').summernote();
+  }
+});
+window.addEventListener('DOMContentLoaded', function () {
+  if (document.querySelector('#master-list')) {
+    axios.get(masterListURL).then(function (response) {
+      console.log(response);
+      document.querySelector('#master-list').innerHTML = response.data.listHtml;
+    })["catch"](function (error) {
+      console.log(error);
+    });
+    var button = document.querySelector('.card-header').querySelector('button');
+    button.addEventListener('click', function () {
+      var sortName = document.querySelector('[value=size]');
+      var sortDate = document.querySelector('[value=date]');
+      var orderAsc = document.querySelector('[value=asc]');
+      var orderDesc = document.querySelector('[value=desc]');
+      var sort, order;
+
+      if (sortName.checked) {
+        sort = 'name';
+      } else if (sortDate.checked) {
+        sort = 'date';
+      } else {
+        sort = 'default';
+      }
+
+      if (orderAsc.checked) {
+        order = 'asc';
+      } else if (orderDesc.checked) {
+        order = 'desc';
+      } else {
+        order = 'default';
+      }
+
+      axios.get(masterListURL + '?sort=' + sort + '&order=' + order).then(function (response) {
+        console.log(response);
+        document.querySelector('#master-list').innerHTML = response.data.listHtml;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    });
   }
 });
 

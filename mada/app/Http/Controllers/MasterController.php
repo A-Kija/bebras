@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Master;
 use Illuminate\Http\Request;
 use Validator;
+use View;
 
 class MasterController extends Controller
 {
@@ -18,6 +19,61 @@ class MasterController extends Controller
         $masters = Master::all();
         return view('master.index', ['masters' => $masters]);
     }
+
+
+    public function list(Request $request)
+    {
+        
+        if ($request->sort) {
+            if ($request->sort == 'default' || $request->sort == 'name') {
+                if ($request->order == 'default' || $request->order == 'asc') {
+                    $masters = Master::orderBy('name')->get();
+                }
+                else if ($request->order == 'desc') {
+                    $masters = Master::orderBy('name', 'desc')->get();
+                }
+                else {
+                    $masters = Master::all();// neturetu nutikti
+                }
+            }
+            else if ($request->sort == 'date') {
+                if ($request->order == 'default' || $request->order == 'asc') {
+                    $masters = Master::orderBy('updated_at')->get();
+                }
+                else if ($request->order == 'desc') {
+                    $masters = Master::orderBy('updated_at', 'desc')->get();
+                }
+                else {
+                    $masters = Master::all();// neturetu nutikti
+                }
+            }
+            else {
+                $masters = Master::all();// neturetu nutikti
+            }
+        }
+        else {
+            $masters = Master::all();
+        }
+        
+        
+
+        
+        
+        
+        
+        
+        $listRender = View::make('master.list')->with(['masters' => $masters])->render();
+        
+        return response()->json([
+            'hell' => 'hello, little one',
+            'listHtml' => $listRender
+        ]);
+        
+        
+        
+    }
+
+
 
     /**
      * Show the form for creating a new resource.

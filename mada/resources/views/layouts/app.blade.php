@@ -18,6 +18,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script>
+    const masterListURL = "{{route('master.list')}}";
+    
+    </script>
 </head>
 <body>
     <div id="app">

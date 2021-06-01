@@ -30,6 +30,10 @@ Route::group(['prefix' => 'masters'], function(){
     Route::post('update/{master}', [MasterController::class, 'update'])->name('master.update');
     Route::post('delete/{master}', [MasterController::class, 'destroy'])->name('master.destroy');
     Route::get('show/{master}', [MasterController::class, 'show'])->name('master.show');
+
+    //JS
+    Route::get('list', [MasterController::class, 'list'])->name('master.list');
+
  });
 
 
