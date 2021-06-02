@@ -8,6 +8,10 @@
                <div class="card-header">
                <h1>Masters</h1>
                 <fieldset class="sort">
+                <legend>Find:</legend>
+                <input type="text" id="serch-field" placeholder="serch">
+                </fieldset>
+                <fieldset class="sort">
                 <legend>Sort by:</legend>
                   <div class="inputs">
                     <label for="_1">name</label><input type="radio" name="sort" value="size" id="_1" checked>

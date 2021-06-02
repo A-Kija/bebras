@@ -11,7 +11,7 @@
                 <fieldset class="sort">
                 <legend>Sort by:</legend>
                   <div class="inputs">
-                    <label for="_1">size</label><input type="radio" name="sort" value="size" @if($sort == 'size') checked @endif id="_1">
+                    <label for="_1">size</label><input type="radio" name="sort" value="size" @if($sort == 'size' || $sort == '') checked @endif id="_1">
                     <label for="_2">outfit</label><input type="radio" name="sort" value="outfit" @if($sort == 'outfit') checked @endif id="_2">
                     <span class="border"></span>
                     <label for="_3">up</label><input type="radio" name="order" value="asc" @if($order == '' || $order == 'asc') checked @endif id="_3">
@@ -34,6 +34,7 @@
                </form>
                </div>
                <div class="card-body">
+               {{ $outfits->links() }}
                 <ul class="list-group">
                  @forelse ($outfits as $outfit)
                   <li class="list-group-item">
@@ -70,6 +71,10 @@
                 @endforelse
                 </ul>
                </div>
+               
+           </div>
+           <div class="paginator-holder">
+           {{ $outfits->links() }}
            </div>
        </div>
    </div>

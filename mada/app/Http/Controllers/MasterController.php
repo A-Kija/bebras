@@ -20,6 +20,26 @@ class MasterController extends Controller
         return view('master.index', ['masters' => $masters]);
     }
 
+    public function search(Request $request)
+    {
+        if ($request->s) {
+            $masters = 
+            Master::where('surname','like', '%'.$request->s.'%')
+            ->orWhere('name','like', '%'.$request->s.'%')
+            ->get();
+        }
+        else {
+            $masters = Master::all();
+        }
+        $listRender = View::make('master.list')->with(['masters' => $masters])->render();
+        
+        return response()->json([
+            'hell' => 'hello, little one',
+            'listHtml' => $listRender
+        ]);
+
+    }
+
 
     public function list(Request $request)
     {

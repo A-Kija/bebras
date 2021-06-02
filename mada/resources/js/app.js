@@ -8,6 +8,28 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 window.addEventListener('DOMContentLoaded', () => {
+
+    if (document.querySelector('#serch-field')) {
+        const searchField = document.querySelector('#serch-field');
+
+        searchField.addEventListener('input', () => {
+            console.log(searchField.value)
+            axios.get(masterSearchURL + '?s=' + searchField.value)
+                .then(function(response) {
+                    console.log(response);
+                    document.querySelector('#master-list').innerHTML = response.data.listHtml;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        })
+
+
+    }
+
+
+
+
     if (document.querySelector('#master-list')) {
 
 

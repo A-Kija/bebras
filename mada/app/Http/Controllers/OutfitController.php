@@ -22,44 +22,91 @@ class OutfitController extends Controller
      */
     public function index(Request $request)
     {
-        
         $masters = Master::all();
-
+        $master_id = 0;
         if ($request->master_id) {
-            $outfits = Outfit::where('master_id', $request->master_id)->get();
             $master_id = $request->master_id;
+            if ($request->sort) {
+                if ('asc' == $request->order) {
+                    if ('size' == $request->sort) {
+                        $outfits = 
+                        Outfit::where('master_id', $request->master_id)
+                        ->orderBy('size')
+                        ->paginate(5)
+                        ->withQueryString();
+                        $order = 'asc';
+                        $sort = 'size';
+                    }
+                    elseif ('outfit' == $request->sort) {
+                        $outfits =
+                        Outfit::where('master_id', $request->master_id)
+                        ->orderBy('type')
+                        ->paginate(5)
+                        ->withQueryString();
+                        $order = 'asc';
+                        $sort = 'outfit';
+                    }
+                }
+                if ('desc' == $request->order) {
+                    if ('size' == $request->sort) {
+                        $outfits =
+                        Outfit::where('master_id', $request->master_id)
+                        ->orderBy('size', 'desc')
+                        ->paginate(5)
+                        ->withQueryString();
+                        $order = 'desc';
+                        $sort = 'size';
+                    }
+                    elseif ('outfit' == $request->sort) {
+                        $outfits = $outfits->sortByDesc('type');
+                        $outfits =
+                        Outfit::where('master_id', $request->master_id)
+                        ->orderBy('type', 'desc')
+                        ->paginate(5)
+                        ->withQueryString();
+                        $order = 'desc';
+                        $sort = 'outfit';
+                     }
+                }
+            }
+            else {
+                $outfits = 
+                Outfit::where('master_id', $request->master_id)
+                ->paginate(5)
+                ->withQueryString();
+            }
         }
         else {
-            $outfits = Outfit::all();
-            $master_id = 0;
-        }
-
         if ($request->sort) {
             if ('asc' == $request->order) {
                 if ('size' == $request->sort) {
-                    $outfits = $outfits->sortBy('size');
+                    $outfits = Outfit::orderBy('size')->paginate(10)->withQueryString();
                     $order = 'asc';
                     $sort = 'size';
                 }
                 elseif ('outfit' == $request->sort) {
-                    $outfits = $outfits->sortBy('type');
+                    $outfits = Outfit::orderBy('type')->paginate(10)->withQueryString();
                     $order = 'asc';
                     $sort = 'outfit';
                 }
             }
             if ('desc' == $request->order) {
                 if ('size' == $request->sort) {
-                    $outfits = $outfits->sortByDesc('size');
+                    $outfits = Outfit::orderBy('size', 'desc')->paginate(10)->withQueryString();
                     $order = 'desc';
                     $sort = 'size';
                 }
                 elseif ('outfit' == $request->sort) {
-                    $outfits = $outfits->sortByDesc('type');
+                    $outfits = Outfit::orderBy('type', 'desc')->paginate(10)->withQueryString();
                     $order = 'desc';
                     $sort = 'outfit';
                 }
             }
         }
+        else {
+            $outfits = Outfit::paginate(10);
+        }
+    }
 
         return view('outfit.index', [
             'outfits' => $outfits,

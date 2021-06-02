@@ -107,3 +107,16 @@ button.btn {
         transform: rotate(360deg);
     }
 }
+
+body {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.paginator-holder {
+    padding: 20px 20px 3px;
+    background-color: #F7F7F7;
+    margin-top: 15px;
+    border-radius: 5px;
+}

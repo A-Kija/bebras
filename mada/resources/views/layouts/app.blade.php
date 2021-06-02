@@ -20,11 +20,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script>
     const masterListURL = "{{route('master.list')}}";
-    
+    const masterSearchURL = "{{route('master.search')}}";
     </script>
 </head>
-<body>
-    <div id="app">
+<body style="background-image:url('{{asset('img/bg.jpg')}}')">
+    <div id="app" >
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
